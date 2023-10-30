@@ -3,7 +3,7 @@ import MyApp from './Builder/Contents';
 
 function App() {
     return (
-        <div className='login'>
+        <div className='checklist'>
             <MyApp />
         </div>
     );

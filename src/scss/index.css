@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+  color: #3c3c3c;
+  padding: 35px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+.app .title {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.app .title button {
+  color: #5e5e5e;
+}
+.app .order-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.app .order-info input {
+  border: none;
+  border-bottom: 1px solid #a0a0a0;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+.app .order-info input:first-child {
+  width: 50%;
+}
+.app .order-info input:last-child {
+  width: 30%;
+}
+.app table {
+  border: 1px solid #a0a0a0;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+.app table tr {
+  background-color: #f4f4f4;
+  border: 1px solid #a0a0a0;
+  padding: 0.35em;
+}
+.app table th,
+.app table td {
+  padding: 0.625em;
+  text-align: center;
+}
+.app table th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 600px) {
+  .app table table {
+    border: 0;
+  }
+  .app table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+  .app table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+  .app table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .app table td:last-child {
+    border-bottom: 0;
+  }
+}
+.app .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+.app .buttons .submitbtn {
+  width: 65%;
+  background-color: #2879fd;
+  color: #fafafa;
+  border-radius: 5px;
+}
+.app .buttons .submitbtn .Submit {
+  width: 70%;
+  background-color: none;
+}
+.app .buttons .submitbtn .Submit:hover {
+  background-color: rgba(40, 121, 253, 0.2);
+}
+.app .buttons .submitbtn .btn-options {
+  width: 30%;
+  background-color: none;
+  border-left: 1px solid #fafafa;
+}
+.app .buttons .submitbtn .btn-options:hover {
+  background-color: rgba(40, 121, 253, 0.2);
+}
+.app .buttons .Reset {
+  width: 30%;
+}/*# sourceMappingURL=index.css.map */

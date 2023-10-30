@@ -43,7 +43,11 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "file-loader": "^6.2.0",
+    "path": "^0.12.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2"
   }
 }

@@ -1,17 +1,18 @@
-function MyButton({ CompName, callback, classNm, isIcon=false }: { CompName: string, classNm: string, isIcon?:boolean, callback: () => void }) {
-    return (<button className={classNm} onClick={callback}>{isIcon ? <i className="bx bxs-chevron-down"></i> : CompName}</button>);
-}
+import SubmitBtns from "./Buttons";
+import CheckList from "./Table";
+import OrderInfo from "./OrderInfo";
 
-function MyFunction() {
-    console.log('Hello world');
-}
 
 export default function MyApp() {
-    return (<div className="buttons">
-        <div id="submitbtn">
-            <MyButton CompName="Enviar" callback={MyFunction} classNm="Submit" />
-            <MyButton CompName="" callback={MyFunction} classNm="btn-options" isIcon/>
+    return (
+        <div className="App">
+            <div className="title">
+                <h1>GXS - Checklist</h1>
+                <button className="settings"><i className='bx bxs-cog' ></i></button>
+            </div>
+            <OrderInfo />
+            <CheckList />
+            <SubmitBtns />
         </div>
-        <MyButton CompName="Reset" callback={MyFunction} classNm="Reset" />
-    </div>);
+    )
 }
