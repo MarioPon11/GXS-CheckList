@@ -11,6 +11,123 @@ body {
   padding: 35px;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.188rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+p,
+a {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+p.body-s {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.text-link {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #2b4bab;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+p.overline {
+  font-size: 0.688rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+p.helper {
+  font-size: 0.625rem;
+  font-weight: 400;
+}
+
+label {
+  font-size: 0.688rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+button.lg {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button.s {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  padding: 0.5rem 0.8rem;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+}
+
+button.accent {
+  background-color: #226af1;
+  color: #fafafa;
+}
+button.accent:hover {
+  cursor: pointer;
+  background-color: #0f5beb;
+}
+button.accent:active {
+  background-color: #0d52d3;
+}
+
+button.default {
+  background-color: #5e5e5e;
+  color: #f4f4f4;
+}
+button.default:hover {
+  cursor: pointer;
+  background-color: #515151;
+}
+button.default:active {
+  background-color: #454545;
+}
+
+button.on-accent {
+  background-color: #f4f4f4;
+  color: #1a1a1a;
+}
+button.on-accent:hover {
+  cursor: pointer;
+  background-color: #e7e7e7;
+}
+button.on-accent:active {
+  background-color: #dbdbdb;
 }
 
 .checklist {
@@ -18,12 +135,14 @@ body {
   height: 100%;
 }
 .checklist .title {
-  font-size: 2rem;
   font-weight: 500;
   margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.checklist .title h3 {
+  font-size: 2.5rem;
 }
 .checklist .title button {
   color: #5e5e5e;
@@ -53,18 +172,35 @@ body {
   padding: 0;
   width: 100%;
 }
+.checklist table thead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e5e5e5;
+}
+.checklist table thead th,
+.checklist table thead td {
+  display: flex;
+  padding: 0.625em;
+  text-align: center;
+}
+.checklist table thead th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 .checklist table tr {
   background-color: #f4f4f4;
   border: 1px solid #a0a0a0;
   padding: 0.35em;
 }
-.checklist table th,
-.checklist table td {
+.checklist table tr th,
+.checklist table tr td {
   display: flex;
   padding: 0.625em;
   text-align: center;
 }
-.checklist table th {
+.checklist table tr th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -84,11 +220,11 @@ body {
   border-radius: 5px;
   height: auto;
 }
-.checklist .action-btns .submitbtn .Submit {
+.checklist .action-btns .submitbtn .submit {
   width: 70%;
   background-color: none;
 }
-.checklist .action-btns .submitbtn .Submit:hover {
+.checklist .action-btns .submitbtn .submit:hover {
   background-color: rgba(40, 121, 253, 0.2);
 }
 .checklist .action-btns .submitbtn .btn-options {
@@ -99,6 +235,6 @@ body {
 .checklist .action-btns .submitbtn .btn-options:hover {
   background-color: rgba(40, 121, 253, 0.2);
 }
-.checklist .action-btns .Reset {
+.checklist .action-btns .reset-btn {
   width: 30%;
 }/*# sourceMappingURL=index.css.map */

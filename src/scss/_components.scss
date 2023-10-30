@@ -1,0 +1,130 @@
+body {
+    background-color: map-get($surface, 090);
+    color: map-get($text, 035);
+    padding: 35px;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+h1 {
+    font-size: 2rem; // 32px
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 1.5rem; // 24px
+    font-weight: 400;
+    letter-spacing: -0.02em;
+}
+
+h3 {
+    font-size: 1.188rem; // 19px
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 1rem; // 16px
+    font-weight: 700;
+}
+
+p,
+a {
+    font-size: 1rem; // 16px
+    font-weight: 400;
+}
+
+p.body-s {
+    font-size: 0.875rem; // 14px
+    font-weight: 400;
+}
+
+.text-link {
+    font-size: 1rem; // 16px
+    font-weight: 400;
+    color: map-get($text, Hyperlink);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+p.overline {
+    font-size: 0.688rem; // 11px
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+p.helper {
+    font-size: 0.625rem; // 10px
+    font-weight: 400;
+}
+
+label {
+    font-size: 0.688rem; // 11px
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+button.lg {
+    font-size: 1rem; // 16px
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    outline: 0;
+    border: 0;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button.s {
+    font-size: 0.875rem; // 14px
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    padding: 0.5rem 0.8rem;
+    outline: 0;
+    border: 0;
+    border-radius: 5px;
+}
+
+button.accent {
+    background-color: map-get($accent, dark);
+    color: map-get($surface, 095);
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken(map-get($accent, dark), 5%);
+    }
+
+    &:active {
+        background-color: darken(map-get($accent, dark), 10%);
+    }
+}
+
+button.default {
+    background-color: map-get($surface, 045);
+    color: map-get($text, 090);
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken(map-get($surface, 045), 5%);
+    }
+
+    &:active {
+        background-color: darken(map-get($surface, 045), 10%);
+    }
+}
+
+button.on-accent {
+    background-color: map-get($surface, 090);
+    color: map-get($text, 010);
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken(map-get($surface, 090), 5%);
+    }
+
+    &:active {
+        background-color: darken(map-get($surface, 090), 10%);
+    }
+}

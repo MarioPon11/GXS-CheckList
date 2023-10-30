@@ -33,7 +33,7 @@ const config: ForgeConfig = {
           },
         ],
       },
-      devContentSecurityPolicy: "default-src 'self' 'unsafe-inline' data: https://unpkg.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: https://www.gstatic.com; style-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com;" 
+      devContentSecurityPolicy: "default-src 'self' 'unsafe-inline' data: https://unpkg.com https://api.update.rocks; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: https://www.gstatic.com; style-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com;" 
     }),
   ],
 };
