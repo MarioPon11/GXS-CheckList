@@ -13,11 +13,11 @@ body {
   height: 100vh;
 }
 
-.app {
+.checklist {
   width: 100%;
   height: 100%;
 }
-.app .title {
+.checklist .title {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 15px;
@@ -25,102 +25,80 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.app .title button {
+.checklist .title button {
   color: #5e5e5e;
 }
-.app .order-info {
+.checklist .order-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
-.app .order-info input {
+.checklist .order-info input {
   border: none;
   border-bottom: 1px solid #a0a0a0;
   background-color: transparent;
   font-size: 1.2rem;
 }
-.app .order-info input:first-child {
+.checklist .order-info input:first-child {
   width: 50%;
 }
-.app .order-info input:last-child {
+.checklist .order-info input:last-child {
   width: 30%;
 }
-.app table {
+.checklist table {
   border: 1px solid #a0a0a0;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
   width: 100%;
-  table-layout: fixed;
 }
-.app table tr {
+.checklist table tr {
   background-color: #f4f4f4;
   border: 1px solid #a0a0a0;
   padding: 0.35em;
 }
-.app table th,
-.app table td {
+.checklist table th,
+.checklist table td {
+  display: flex;
   padding: 0.625em;
   text-align: center;
 }
-.app table th {
+.checklist table th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-@media screen and (max-width: 600px) {
-  .app table table {
-    border: 0;
-  }
-  .app table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: 0.625em;
-  }
-  .app table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: 0.8em;
-    text-align: right;
-  }
-  .app table td::before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .app table td:last-child {
-    border-bottom: 0;
-  }
-}
-.app .buttons {
+.checklist .action-btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 5px;
+  width: 100%;
+  height: 50px;
 }
-.app .buttons .submitbtn {
+.checklist .action-btns .submitbtn {
   width: 65%;
   background-color: #2879fd;
   color: #fafafa;
   border-radius: 5px;
+  height: auto;
 }
-.app .buttons .submitbtn .Submit {
+.checklist .action-btns .submitbtn .Submit {
   width: 70%;
   background-color: none;
 }
-.app .buttons .submitbtn .Submit:hover {
+.checklist .action-btns .submitbtn .Submit:hover {
   background-color: rgba(40, 121, 253, 0.2);
 }
-.app .buttons .submitbtn .btn-options {
+.checklist .action-btns .submitbtn .btn-options {
   width: 30%;
   background-color: none;
   border-left: 1px solid #fafafa;
 }
-.app .buttons .submitbtn .btn-options:hover {
+.checklist .action-btns .submitbtn .btn-options:hover {
   background-color: rgba(40, 121, 253, 0.2);
 }
-.app .buttons .Reset {
+.checklist .action-btns .Reset {
   width: 30%;
 }/*# sourceMappingURL=index.css.map */

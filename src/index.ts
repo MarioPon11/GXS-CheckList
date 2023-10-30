@@ -7,6 +7,11 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 import * as path from 'path';
 
+const APP_VERSION = app.getVersion();
+
+// The url that the application is going to query for new release
+const AUTO_UPDATE_URL = { url: 'https://api.update.rocks/update/github.com/MarioPon11/graphxtime-releases/stable/' + process.platform + '/' + APP_VERSION };
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -60,6 +65,8 @@ app.on('ready', () => {
   tray.on('click', () => {
     mainWindow.show();
   });
+
+  init();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -81,3 +88,36 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+function init(): void {
+  if (process.platform === 'linux') {
+    console.log('Auto updates not available on linux');
+  } else {
+    initDarwinWin32();
+  }
+}
+
+function initDarwinWin32(): void {
+  autoUpdater.on('error', (err) => console.error(`Update error: ${err.message}`));
+  autoUpdater.on('checking-for-update', () => console.log('Checking for update'));
+  autoUpdater.on('update-available', () => console.log('Update available'));
+  autoUpdater.on('update-not-available', () => console.log('No update available'));
+
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    dialog.showMessageBox(mainWindow, {
+      type: 'question',
+      buttons: ['Update', 'Cancel'],
+      defaultId: 0,
+      message: `Version ${releaseName} is available, do you want to install it now?`,
+      title: 'Update available'
+    }).then(({ response }) => {
+      if (response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
+
+  autoUpdater.setFeedURL(AUTO_UPDATE_URL);
+  autoUpdater.checkForUpdates();
+}

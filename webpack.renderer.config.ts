@@ -10,12 +10,12 @@ rules.push({
       loader: 'file-loader',
     }
   ]
-});
+},);
 
 rules.push({
-  test: /\.css$/i,
-  use: [ "style-loader", "css-loader", "sass-loader", ],
-});
+  test: /\.s?css$/,
+  use: ['style-loader', 'css-loader', 'sass-loader']
+},);
 
 export const rendererConfig: Configuration = {
   module: {
@@ -23,6 +23,6 @@ export const rendererConfig: Configuration = {
   },
   plugins,
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.ico', '.scss'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.ico', '.scss', '.sass'],
   },
 };

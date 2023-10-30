@@ -5,11 +5,11 @@ function MyFunction(){
 }
 
 export default function SubmitBtns() {
-    return (<div className="buttons">
+    return (<div className="action-btns">
         <div id="submitbtn">
-            <ActionButtons CompName="Enviar" callback={MyFunction} classNm="Submit" />
-            <ActionButtons CompName="" callback={MyFunction} classNm="btn-options" isIcon />
+            <ActionButtons CompName="Enviar" callback={MyFunction} isMainAction />
+            <ActionButtons CompName="" callback={MyFunction} isMainAction isIcon />
         </div>
-        <ActionButtons CompName="Reset" callback={MyFunction} classNm="Reset" />
+        <ActionButtons CompName="Reset" callback={MyFunction} />
     </div>);
 }
