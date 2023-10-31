@@ -1,10 +1,12 @@
+@import 'colors';
+
 body {
     background-color: map-get($surface, 090);
     color: map-get($text, 035);
     padding: 35px;
     width: 100vw;
     height: 100vh;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 h1 {
@@ -126,5 +128,38 @@ button.on-accent {
 
     &:active {
         background-color: darken(map-get($surface, 090), 10%);
+    }
+}
+
+div,
+section,
+article,
+aside {
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: map-get($surface, 045);
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: map-get($surface, 055);
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: map-get($surface, 080);
+    }
+    &::-webkit-scrollbar-track:hover {
+        background: map-get($surface, 070);
     }
 }

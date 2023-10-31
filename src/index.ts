@@ -7,6 +7,9 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 import * as path from 'path';
 
+import Store from 'electron-store';
+const store = new Store();
+
 const APP_VERSION = app.getVersion();
 
 // The url that the application is going to query for new release
@@ -22,14 +25,14 @@ let mainWindow: BrowserWindow;
 const createWindow = (): void => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 800,
-    width: 600,
+    height: 700,
+    width: 500,
     resizable: false,
     frame: false,
     skipTaskbar: true,
     icon: path.join(__dirname, './assets/icons/GXS-Checklist.ico'),
-    x: screen.getPrimaryDisplay().workAreaSize.width - 610,
-    y: screen.getPrimaryDisplay().workAreaSize.height - 810,
+    x: screen.getPrimaryDisplay().workAreaSize.width - 510,
+    y: screen.getPrimaryDisplay().workAreaSize.height - 710,
     alwaysOnTop: true,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -89,7 +92,20 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+//SECTION - IPC Events
 
+ipcMain.handle('get-data', async (event, account) => {
+  const data = await fetchDataFromDatabase();
+  return data;
+});
+
+ipcMain.handle('update-data', async (event, data: object) => {
+  store.set('checklist-data', data);
+});
+
+//!SECTION
+
+//SECTION - Functions 
 function init(): void {
   if (process.platform === 'linux') {
     console.log('Auto updates not available on linux');
@@ -121,3 +137,62 @@ function initDarwinWin32(): void {
   autoUpdater.setFeedURL(AUTO_UPDATE_URL);
   autoUpdater.checkForUpdates();
 }
+
+function fetchDataFromDatabase(): Promise<any> {
+  const data = store.get('checklist-data');
+  // Tab names
+  const fullData: object[] = [{
+    name: 'tab1',
+    values: [
+      'Read Instructions and Understood',
+      'Used Correct Template',
+      'Used PMS Swatches',
+      'Cleaned Artwork',
+      'Position Artwork Correctly',
+      'QC the Art',
+      'Correct Files Attached',
+      'Field 1',
+      'Test for overflow',
+      'more test',
+      'something',
+      'nothing',
+      'something else',
+      'nothing else',
+      'matters',
+      'doesnt matter',
+      'Field 1 agian',
+    ]
+  }, {
+    name: 'tab2',
+    values: [
+      'Read Instructions and Understood',
+      'Used Correct Template',
+      'Used PMS Swatches',
+      'Cleaned Artwork',
+      'Position Artwork Correctly',
+      'QC the Art',
+      'Correct Files Attached',
+      'Field 2'
+    ]
+  }, {
+    name: 'tab3',
+    values: [
+      'Read Instructions and Understood',
+      'Used Correct Template',
+      'Used PMS Swatches',
+      'Cleaned Artwork',
+      'Position Artwork Correctly',
+      'QC the Art',
+      'Correct Files Attached',
+      'Field 3'
+    ]
+  }];
+
+  return new Promise((resolve, reject) => {
+    resolve(fullData);
+  });
+}
+
+//!SECTION
+
+//SECTION - Types

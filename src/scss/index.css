@@ -5,13 +5,20 @@
   font-family: "Roboto", sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   background-color: #f4f4f4;
   color: #3c3c3c;
   padding: 35px;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 h1 {
@@ -130,7 +137,53 @@ button.on-accent:active {
   background-color: #dbdbdb;
 }
 
+div::-webkit-scrollbar,
+section::-webkit-scrollbar,
+article::-webkit-scrollbar,
+aside::-webkit-scrollbar {
+  width: 10px;
+}
+div::-webkit-scrollbar-thumb,
+section::-webkit-scrollbar-thumb,
+article::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb {
+  background: #5e5e5e;
+  border-radius: 5px;
+}
+div::-webkit-scrollbar-thumb:hover,
+section::-webkit-scrollbar-thumb:hover,
+article::-webkit-scrollbar-thumb:hover,
+aside::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+div::-webkit-scrollbar-button,
+section::-webkit-scrollbar-button,
+article::-webkit-scrollbar-button,
+aside::-webkit-scrollbar-button {
+  display: none;
+}
+div::-webkit-scrollbar-corner,
+section::-webkit-scrollbar-corner,
+article::-webkit-scrollbar-corner,
+aside::-webkit-scrollbar-corner {
+  background: transparent;
+}
+div::-webkit-scrollbar-track,
+section::-webkit-scrollbar-track,
+article::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track {
+  background: #e5e5e5;
+}
+div::-webkit-scrollbar-track:hover,
+section::-webkit-scrollbar-track:hover,
+article::-webkit-scrollbar-track:hover,
+aside::-webkit-scrollbar-track:hover {
+  background: #d3d3d3;
+}
+
 .checklist {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 }
@@ -144,97 +197,345 @@ button.on-accent:active {
 .checklist .title h3 {
   font-size: 2.5rem;
 }
-.checklist .title button {
-  color: #5e5e5e;
+.checklist .title .settings {
+  cursor: pointer;
+  font-size: 2rem;
+}
+.checklist .title .settings:hover {
+  color: #1a1a1a;
+}
+.checklist .menu {
+  position: absolute;
+  height: 600px;
+  width: 400px;
+  top: calc(50% - 300px);
+  left: calc(50% - 200px);
+  z-index: 2;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 10px;
+}
+.checklist .menu h2 {
+  margin-bottom: 10px;
+  font-size: 1.75rem;
+}
+.checklist .menu h3 {
+  margin-bottom: 10px;
+}
+.checklist .menu .tabs-info {
+  width: 100%;
+  height: 50%;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.checklist .menu .tabs-info::-webkit-scrollbar {
+  display: none;
+}
+.checklist .menu .tabs-info .tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.checklist .menu .tabs-info .tabs .tab {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #e5e5e5;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  position: relative;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control input {
+  width: 70%;
+  padding: 5px;
+  font-size: 1rem;
+  outline: none;
+  background-color: transparent;
+  border: none;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control input:focus + .tab-control-span {
+  background-color: #3c3c3c;
+  bottom: -2px;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control .tab-control-span {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 70%;
+  background-color: #d3d3d3;
+  transition: background-color 100ms ease-in-out, bottom 100ms ease-in-out;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control button {
+  background-color: #d3d3d3;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-control button:hover {
+  background-color: #f4f4f4;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-data {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #a0a0a0;
+  outline: none;
+  padding: 5px;
+}
+.checklist .menu .tabs-info .tabs .tab .tab-data:focus {
+  border: 1px solid #3c3c3c;
+}
+.checklist .menu .tabs-info .tabs button {
+  cursor: pointer;
+  border: none;
+  padding: 5px;
+  background-color: #d3d3d3;
+}
+.checklist .menu .tabs-info .tabs button:hover {
+  background-color: #e5e5e5;
+}
+.checklist .menu .divisor {
+  width: 100%;
+  height: 1px;
+  background-color: #3c3c3c;
+  margin: 10px 0;
+}
+.checklist .menu .email-list {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.checklist .menu .email-list .email-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /*  overflow-y: scroll;
+  scrollbar-width: none; */
+  position: relative;
+}
+.checklist .menu .email-list .email-container::-webkit-scrollbar {
+  display: none;
+}
+.checklist .menu .email-list .email-container input {
+  font-size: 1rem;
+  outline: none;
+  background-color: transparent;
+  border: none;
+}
+.checklist .menu .email-list .email-container input:focus + span {
+  background-color: #3c3c3c;
+  bottom: -5px;
+}
+.checklist .menu .email-list .email-container span {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #d3d3d3;
+  transition: background-color 100ms ease-in-out, bottom 100ms ease-in-out;
+}
+.checklist .menu .email-list button {
+  cursor: pointer;
+  border: none;
+  padding: 5px;
+  background-color: #d3d3d3;
+}
+.checklist .menu .email-list button:hover {
+  background-color: #e5e5e5;
+}
+.checklist .menu .menu-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+}
+.checklist .menu .menu-btns button {
+  width: 50%;
+}
+.checklist .curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+  background-color: rgba(26, 26, 26, 0.2);
 }
 .checklist .order-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+  gap: 50px;
 }
-.checklist .order-info input {
+.checklist .order-info .order-input {
+  width: 50%;
+  position: relative;
+}
+.checklist .order-info .order-input input {
+  outline: none;
   border: none;
-  border-bottom: 1px solid #a0a0a0;
   background-color: transparent;
   font-size: 1.2rem;
-}
-.checklist .order-info input:first-child {
-  width: 50%;
-}
-.checklist .order-info input:last-child {
-  width: 30%;
-}
-.checklist table {
-  border: 1px solid #a0a0a0;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
+  transition: all 150ms ease-in-out;
   width: 100%;
 }
-.checklist table thead {
+.checklist .order-info .order-input input:focus + .input1-line,
+.checklist .order-info .order-input input:focus + .input2-line {
+  background-color: #3c3c3c;
+  bottom: -5px;
+}
+.checklist .order-info .order-input .input1-line,
+.checklist .order-info .order-input .input2-line {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background-color: #d3d3d3;
+  transition: background-color 100ms ease-in-out, bottom 100ms ease-in-out;
+}
+.checklist .table-container {
+  display: flex;
+  flex-direction: column;
+  height: 440px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #a0a0a0;
+  border-radius: 10px;
+  border-collapse: collapse;
+}
+.checklist .table-container .tabs {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+}
+.checklist .table-container .tabs button {
+  border: none;
+  width: 100%;
+  padding: 5px;
+  border-left: 1px solid #a0a0a0;
+  border-bottom: 1px solid #a0a0a0;
+  border-collapse: collapse;
+}
+.checklist .table-container .tabs button:first-child {
+  border-left: none;
+}
+.checklist .table-container .tabs button:last-child {
+  border-right: 1px solid #a0a0a0;
+}
+.checklist .table-container table {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-right: 1px solid #a0a0a0;
+  border-collapse: collapse;
+}
+.checklist .table-container table thead {
   background-color: #e5e5e5;
+  border-bottom: 1px solid #a0a0a0;
+  border-collapse: collapse;
 }
-.checklist table thead th,
-.checklist table thead td {
-  display: flex;
+.checklist .table-container table thead th,
+.checklist .table-container table thead td {
   padding: 0.625em;
-  text-align: center;
+  text-align: left;
 }
-.checklist table thead th {
+.checklist .table-container table thead th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.checklist table tr {
+.checklist .table-container table tbody {
+  border-top: 1px solid #a0a0a0;
+  border-collapse: collapse;
+}
+.checklist .table-container table tbody tr {
   background-color: #f4f4f4;
-  border: 1px solid #a0a0a0;
   padding: 0.35em;
+  cursor: pointer;
+  border-top: 1px solid #a0a0a0;
+  border-collapse: collapse;
 }
-.checklist table tr th,
-.checklist table tr td {
-  display: flex;
-  padding: 0.625em;
-  text-align: center;
+.checklist .table-container table tbody tr th,
+.checklist .table-container table tbody tr td {
+  padding: 0.625rem 0.5rem;
+  text-align: left;
 }
-.checklist table tr th {
+.checklist .table-container table tbody tr th:first-child,
+.checklist .table-container table tbody tr td:first-child {
+  width: 30px;
+  text-align: right;
+  padding: 0;
+}
+.checklist .table-container table tbody tr th:last-child,
+.checklist .table-container table tbody tr td:last-child {
+  text-align: right;
+}
+.checklist .table-container table tbody tr th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+.checklist .table-container table tbody tr th:first-child {
+  padding: 0;
 }
 .checklist .action-btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5px;
   width: 100%;
-  height: 50px;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 2rem;
+  margin-bottom: 2rem;
 }
 .checklist .action-btns .submitbtn {
-  width: 65%;
+  width: 55%;
   background-color: #2879fd;
   color: #fafafa;
   border-radius: 5px;
   height: auto;
+  display: flex;
 }
-.checklist .action-btns .submitbtn .submit {
+.checklist .action-btns .submitbtn button {
   width: 70%;
   background-color: none;
+  border-radius: 5px 0 0 5px;
 }
-.checklist .action-btns .submitbtn .submit:hover {
+.checklist .action-btns .submitbtn button:hover {
   background-color: rgba(40, 121, 253, 0.2);
+  border-radius: 5px 0 0 5px;
 }
 .checklist .action-btns .submitbtn .btn-options {
   width: 30%;
-  background-color: none;
+  border-radius: 0 5px 5px 0;
   border-left: 1px solid #fafafa;
 }
-.checklist .action-btns .submitbtn .btn-options:hover {
-  background-color: rgba(40, 121, 253, 0.2);
-}
 .checklist .action-btns .reset-btn {
-  width: 30%;
+  width: 40%;
 }/*# sourceMappingURL=index.css.map */
