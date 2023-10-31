@@ -134,7 +134,8 @@ button.on-accent {
 div,
 section,
 article,
-aside {
+aside,
+.tab-data {
     &::-webkit-scrollbar {
         width: 10px;
     }

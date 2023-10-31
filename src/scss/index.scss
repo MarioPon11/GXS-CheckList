@@ -123,7 +123,7 @@
 
                     .tab-data {
                         width: 100%;
-                        background-color: transparent;
+                        background-color: rgba(map-get($surface, 090), 0.5);
                         border: 1px solid map-get($surface, 055);
                         outline: none;
                         padding: 5px;
