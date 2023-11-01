@@ -4,11 +4,20 @@ import { app, BrowserWindow, screen, ipcMain, shell, dialog, globalShortcut, Not
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+// bhvs yndf gcoj ezgf
 
 import * as path from 'path';
-
 import Store from 'electron-store';
+import nodemailer from 'nodemailer';
 const store = new Store();
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'notifications.gxs@gmail.com',
+    pass: 'bhvs yndf gcoj ezgf'
+  }
+});
 
 const APP_VERSION = app.getVersion();
 
@@ -116,17 +125,32 @@ interface settingsData {
 
 ipcMain.handle('save-settings', async (event, data: settingsData) => {
   console.log('Saving settings:', data.tabs, data.emails);
-  if (data.tabs.length > 0 && data.emails.length > 0) {
-    store.set('checklist-data', data.tabs);
-    store.set('emails', data.emails);
-    mainWindow.reload();
-    return 'Success';
-  } else if (data.tabs.length === 0) {
-    return 400;
-  } else if (data.emails.length === 0) {
-    return 401;
-  }
+  store.set('checklist-data', data.tabs);
+  store.set('emails', data.emails);
+  mainWindow.reload();
+  return 'Success';
+});
 
+ipcMain.handle('send-email', async (event, accountName: string/* , emailBody: object, emailList: string[] */) => {
+  // const receiversList = emailList.join(', ');
+  const receiversList = 'gxs.mpon@gmail.com';
+
+  try {
+    const info = await transporter.sendMail({
+      from: '<notifications.gxs@gmail.com>',
+      to: receiversList,
+      subject: "New Test",
+      html: "<b>This is a test?</b>"
+    }, function (err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(info);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 //!SECTION

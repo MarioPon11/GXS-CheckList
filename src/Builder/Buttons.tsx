@@ -17,9 +17,14 @@ const SubmitBtns: React.FC = () => {
         setCheckedRows(newCheckedRows);
     };
 
-    function MyFunction() {
+    function SubmitForm() {
         console.log('Send button was clicked');
         console.log('Input Value: ', account, order, currentTabValues, checkedRows);
+        window.api.invoke('send-email', account);
+    }
+
+    function HandleMenu() {
+        console.log('Menu button was clicked');
     }
 
     function handleClearOrder() {
@@ -31,8 +36,8 @@ const SubmitBtns: React.FC = () => {
     return (
         <div className="action-btns">
             <div className="submitbtn">
-                <button className="lg accent" onClick={MyFunction}>Send</button>
-                <button className="lg accent btn-options" onClick={MyFunction}><i className="bx bxs-chevron-down"></i></button>
+                <button className="lg accent" onClick={SubmitForm}>Send</button>
+                <button className="lg accent btn-options" onClick={HandleMenu}><i className="bx bxs-chevron-down"></i></button>
             </div>
             <button className="lg default reset-btn" onClick={handleClearOrder}>Reset</button>
         </div>

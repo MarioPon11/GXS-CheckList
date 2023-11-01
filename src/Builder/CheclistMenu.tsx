@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BulletTextArea from "./attoms/CheckTextArea";
 import InputField from "./attoms/tabName";
+import AlertBox from './attoms/alertBox';
 
 interface buttonProps {
     closeMenuFunct: (value?: boolean) => void;
@@ -9,6 +10,16 @@ interface buttonProps {
 const AppMenu: React.FC<buttonProps> = ({ closeMenuFunct }) => {
     const [tabs, setTabs] = useState<any[]>([]);
     const [emails, setEmails] = useState<any[]>([]);
+    const [alerts, setAlerts] = useState<any[]>([]);
+
+    const addAlert = (message: string) => {
+        const id = Math.random().toString(36).substr(2, 9);
+        setAlerts([...alerts, { id, message }]);
+    };
+
+    const removeAlert = (id: string) => {
+        setAlerts(alerts.filter(alert => alert.id !== id));
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,18 +39,31 @@ const AppMenu: React.FC<buttonProps> = ({ closeMenuFunct }) => {
     function saveSettings() {
         const data = { tabs, emails };
         console.log('Saving settings: ', data.tabs, data.emails);
-
-        const response = window.api.invoke('save-settings', data);
-
-        if (response === 'Success') {
-            closeMenuFunct();
+        if (data.tabs.length === 0) {
+            addAlert("You must have at least one tab");
+            return;
+        } else if (data.tabs.some((tab: any) => tab.name === '')) {
+            addAlert("You must have a name for each tab");
+            return;
+        } else if (data.emails.length === 0) {
+            addAlert("You must have at least one email");
+            return;
+        } else if (data.emails.some((email: any) => email === '')) {
+            addAlert("You must have an email for each email");
+            return;
+        } else if (data.tabs.some((tab: any) => tab.values.length === 0)) {
+            addAlert("You must have at least one bullet per tab");
+            return;
+        } else if (data.tabs.some((tab: any) => tab.values.some((value: any) => value === ''))) {
+            addAlert("You must have a value for each bullet");
+            return;
         } else {
-            if(response === 400) {
-                alert('Please fill in all the fields!');
-            } else if (response === 401) {
-                alert('There must be at least one email and one tab with one value!');
+            const response = window.api.invoke('save-settings', data);
+
+            if (response !== 'Success') {
+                console.log('Error saving settings: ', response);
             } else {
-                alert('There was an error saving the settings!');
+                closeMenuFunct();
             }
         }
     }
@@ -77,12 +101,12 @@ const AppMenu: React.FC<buttonProps> = ({ closeMenuFunct }) => {
         const lines = newValue.split('\n');
         const cleanedLines = lines.map(line => line.replace('- ', ''));
         console.log('Got lines:', cleanedLines, 'From index', index);
-        
+
         const newTabs = JSON.parse(JSON.stringify(tabs));
-        
+
         if (JSON.stringify(newTabs[index].values) !== JSON.stringify(cleanedLines)) {
-          newTabs[index].values = cleanedLines;
-          setTabs(newTabs);
+            newTabs[index].values = cleanedLines;
+            setTabs(newTabs);
         }
     };
 
@@ -130,6 +154,11 @@ const AppMenu: React.FC<buttonProps> = ({ closeMenuFunct }) => {
                     <button onClick={CloseMenu} className="lg default">Cancel</button>
                 </div>
             </div>
+            {
+                alerts.map(alert => (
+                    <AlertBox key={alert.id} message={alert.message} onClose={() => removeAlert(alert.id)} />
+                ))
+            }
         </>
     );
 };

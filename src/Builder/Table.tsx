@@ -6,13 +6,15 @@ const CheckList: React.FC = () => {
     const { tabs, setTabs } = useCheckboxContext();
     const { currentTabValues, setCurrentTabValues } = useCheckboxContext();
     const { checkedRows, setCheckedRows } = useCheckboxContext();
+    const [activeTab, setActiveTab] = useState<string>('');
 
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await window.api.invoke('get-data');
             setTabs(response);
-            setCurrentTabValues(response[0].values); // Default to the first tab's values
+            setCurrentTabValues(response[0].values);
+            setActiveTab(response[0].name) // Default to the first tab's values
         };
         fetchData();
     }, []);
@@ -21,6 +23,7 @@ const CheckList: React.FC = () => {
         const selectedTab = tabs.find((tab) => tab.name === tabName);
         if (selectedTab) {
             setCurrentTabValues(selectedTab.values);
+            setActiveTab(tabName);
         }
     };
 
@@ -37,7 +40,7 @@ const CheckList: React.FC = () => {
                 {/* Tabs */}
                 <div className="tabs">
                     {tabs.map((tab, index) => (
-                        <button key={index} onClick={() => handleTabClick(tab.name)}>
+                        <button key={index} onClick={() => handleTabClick(tab.name)} className={tab.name === activeTab ? 'active' : ''}>
                             {tab.name}
                         </button>
                     ))}

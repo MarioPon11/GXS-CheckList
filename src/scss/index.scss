@@ -64,7 +64,6 @@
             width: 100%;
             height: 50%;
             overflow-y: scroll;
-            scrollbar-width: none;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -162,17 +161,17 @@
         }
         .email-list {
             width: 100%;
-            height: 30%;
+            height: 20%;
             display: flex;
             flex-direction: column;
+            overflow-y: scroll;
             gap: 10px;
 
-            .email-container {
+            .email {
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
-                /*  overflow-y: scroll;
-                scrollbar-width: none; */
+                justify-content: space-between;
                 position: relative;
 
                 &::-webkit-scrollbar {
@@ -184,6 +183,7 @@
                     outline: none;
                     background-color: transparent;
                     border: none;
+                    width: 70%;
 
                     &:focus {
                         + span {
@@ -198,7 +198,7 @@
                     bottom: -2px;
                     left: 0;
                     height: 2px;
-                    width: 100%;
+                    width: 70%;
                     background-color: map-get($surface, 070);
                     transition:
                         background-color 100ms ease-in-out,
@@ -246,6 +246,19 @@
         z-index: 1;
         backdrop-filter: blur(15px);
         background-color: rgba(map-get($surface, 010), 0.2);
+    }
+
+    .alertbox {
+        background-color: map-get($communication, Error);
+        color: map-get($text, 095);
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-bottom: 10px;
     }
 
     .order-info {
@@ -324,6 +337,10 @@
                     border-right: 1px solid map-get($surface, 055);
                 }
             }
+
+            .active {
+                background-color: map-get($surface, 080);
+            }
         }
 
         table {
@@ -353,6 +370,9 @@
             tbody {
                 border-top: 1px solid map-get($surface, 055);
                 border-collapse: collapse;
+                min-height: calc(100% - 49.5px);
+                border-bottom: 1px solid map-get($surface, 055);
+
                 tr {
                     background-color: map-get($surface, 090);
                     padding: 0.35em;
@@ -385,6 +405,15 @@
                             padding: 0;
                         }
                     }
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    border-top: 1px solid map-get($surface, 055); // Your border style
                 }
             }
         }
