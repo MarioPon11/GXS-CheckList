@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CheckList from "./Table";
 import OrderInfo from "./OrderInfo";
 import AppMenu from "./CheclistMenu";
+import { InputValueContextProvider, CheckboxContextProvider } from './Context';
 
 export default function MyApp() {
     const [menuVisible, setMenuVisible] = useState(false);
@@ -15,10 +16,14 @@ export default function MyApp() {
                 </h3>
             </div>
             {menuVisible && (
-                <AppMenu buttonF={setMenuVisible} />
+                <AppMenu closeMenuFunct={setMenuVisible} />
             )}
-            <OrderInfo />
-            <CheckList />
+            <InputValueContextProvider>
+                <OrderInfo />
+                <CheckboxContextProvider>
+                    <CheckList />
+                </CheckboxContextProvider>
+            </InputValueContextProvider>
         </>
     )
 }

@@ -21,7 +21,7 @@ contextBridge.exposeInMainWorld(
         }
     },
     invoke: async (channel: string, data: ElectronData) => {
-        const validChannels = ["get-data"];
+        const validChannels = ["get-data", "get-emails", "save-settings"];
         if (validChannels.includes(channel)) {
             return await ipcRenderer.invoke(channel, data);
         }

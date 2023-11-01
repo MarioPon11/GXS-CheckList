@@ -94,13 +94,39 @@ app.on('activate', () => {
 
 //SECTION - IPC Events
 
-ipcMain.handle('get-data', async (event, account) => {
+ipcMain.handle('get-data', async (event) => {
   const data = await fetchDataFromDatabase();
   return data;
 });
 
 ipcMain.handle('update-data', async (event, data: object) => {
   store.set('checklist-data', data);
+});
+
+ipcMain.handle('get-emails', async (event) => {
+  const email = await fetchEmailFromDatabase();
+  console.log('The email is:', email);
+  return email;
+});
+
+interface settingsData {
+  tabs: object[],
+  emails: string[]
+}
+
+ipcMain.handle('save-settings', async (event, data: settingsData) => {
+  console.log('Saving settings:', data.tabs, data.emails);
+  if (data.tabs.length > 0 && data.emails.length > 0) {
+    store.set('checklist-data', data.tabs);
+    store.set('emails', data.emails);
+    mainWindow.reload();
+    return 'Success';
+  } else if (data.tabs.length === 0) {
+    return 400;
+  } else if (data.emails.length === 0) {
+    return 401;
+  }
+
 });
 
 //!SECTION
@@ -142,54 +168,30 @@ function fetchDataFromDatabase(): Promise<any> {
   const data = store.get('checklist-data');
   // Tab names
   const fullData: object[] = [{
-    name: 'tab1',
+    name: 'Welcome!',
     values: [
-      'Read Instructions and Understood',
-      'Used Correct Template',
-      'Used PMS Swatches',
-      'Cleaned Artwork',
-      'Position Artwork Correctly',
-      'QC the Art',
-      'Correct Files Attached',
-      'Field 1',
-      'Test for overflow',
-      'more test',
-      'something',
-      'nothing',
-      'something else',
-      'nothing else',
-      'matters',
-      'doesnt matter',
-      'Field 1 agian',
-    ]
-  }, {
-    name: 'tab2',
-    values: [
-      'Read Instructions and Understood',
-      'Used Correct Template',
-      'Used PMS Swatches',
-      'Cleaned Artwork',
-      'Position Artwork Correctly',
-      'QC the Art',
-      'Correct Files Attached',
-      'Field 2'
-    ]
-  }, {
-    name: 'tab3',
-    values: [
-      'Read Instructions and Understood',
-      'Used Correct Template',
-      'Used PMS Swatches',
-      'Cleaned Artwork',
-      'Position Artwork Correctly',
-      'QC the Art',
-      'Correct Files Attached',
-      'Field 3'
+      'Welcome to the CheckList!',
+      'Please Click on the Gear Icon to setup your tasks!'
     ]
   }];
 
-  return new Promise((resolve, reject) => {
-    resolve(fullData);
+  return new Promise((resolve) => {
+    if (data) {
+      resolve(data);
+    } else {
+      resolve(fullData);
+    }
+  });
+}
+
+function fetchEmailFromDatabase(): Promise<any> {
+  const email = store.get('emails');
+  return new Promise((resolve) => {
+    if (email) {
+      resolve(email);
+    } else {
+      resolve(['jhon.doe@test.com', 'jane.doe@test.com']);
+    }
   });
 }
 

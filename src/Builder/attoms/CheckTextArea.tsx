@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 interface BulletTextAreaProps {
   existingData?: string[];
+  updateParent?: (index: number, newValue: string) => void;
+  index?: number;
 }
 
-const BulletTextArea: React.FC<BulletTextAreaProps> = ({ existingData }) => {
+const BulletTextArea: React.FC<BulletTextAreaProps> = ({ existingData, updateParent, index }) => {
   const [text, setText] = useState<string>('');
 
   useEffect(() => {
@@ -12,7 +14,15 @@ const BulletTextArea: React.FC<BulletTextAreaProps> = ({ existingData }) => {
       const populatedText = existingData.map(item => `- ${item}`).join('\n');
       setText(populatedText);
     }
-  }, [existingData]);
+  }, []); // Empty dependency array
+
+  useEffect(() => {
+    if (updateParent && index !== undefined) {
+      updateParent(index, text);
+    }
+  }, [text, updateParent, index]);
+
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
@@ -27,6 +37,7 @@ const BulletTextArea: React.FC<BulletTextAreaProps> = ({ existingData }) => {
       value={text}
       onChange={(e) => setText(e.target.value)}
       onKeyDown={handleKeyDown}
+      placeholder='List'
       rows={10}
       cols={50}
     />

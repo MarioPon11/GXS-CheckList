@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import SubmitBtns from "./Buttons";
-// Define the type for a row
+import { useCheckboxContext } from './Context';
 
 const CheckList: React.FC = () => {
-    const [tabs, setTabs] = useState<any[]>([]);
-    const [currentTabValues, setCurrentTabValues] = useState<string[]>([]);
-    const [checkedRows, setCheckedRows] = useState<Record<string, boolean>>({});
+    const { tabs, setTabs } = useCheckboxContext();
+    const { currentTabValues, setCurrentTabValues } = useCheckboxContext();
+    const { checkedRows, setCheckedRows } = useCheckboxContext();
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await window.api.invoke('get-data', 'Account Name');
+            const response = await window.api.invoke('get-data');
             setTabs(response);
             setCurrentTabValues(response[0].values); // Default to the first tab's values
         };
@@ -29,17 +29,6 @@ const CheckList: React.FC = () => {
             ...prevState,
             [value]: !prevState[value]
         }));
-    };
-
-    const UncheckAllRows = () => {
-        // Create a new object with all keys set to false
-        const newCheckedRows = Object.keys(checkedRows).reduce((acc, key) => {
-            acc[key] = false;
-            return acc;
-        }, {} as Record<string, boolean>);
-
-        // Update the state
-        setCheckedRows(newCheckedRows);
     };
 
     return (
@@ -75,7 +64,7 @@ const CheckList: React.FC = () => {
                 </table>
             </div>
             {/* Buttons */}
-            <SubmitBtns UncheckAllRows={UncheckAllRows} />
+            <SubmitBtns />
         </>
     );
 };
