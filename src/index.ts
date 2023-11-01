@@ -4,7 +4,6 @@ import { app, BrowserWindow, screen, ipcMain, shell, dialog, globalShortcut, Not
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
-// bhvs yndf gcoj ezgf
 
 import * as path from 'path';
 import Store from 'electron-store';
@@ -134,6 +133,15 @@ ipcMain.handle('save-settings', async (event, data: settingsData) => {
 ipcMain.handle('send-email', async (event, accountName: string/* , emailBody: object, emailList: string[] */) => {
   // const receiversList = emailList.join(', ');
   const receiversList = 'gxs.mpon@gmail.com';
+
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
 
   try {
     const info = await transporter.sendMail({
