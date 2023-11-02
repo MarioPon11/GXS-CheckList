@@ -19,6 +19,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const TrayIcon = process.platform === 'win32' ? '../renderer/assets/GXS-Checklist.ico' : '../renderer/assets/GXS-Checklist.png';
+
 const APP_VERSION = app.getVersion();
 
 // The url that the application is going to query for new release
@@ -66,8 +68,7 @@ const createWindow = (): void => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createWindow();
-
-  const tray = new Tray(path.join(__dirname, '../renderer/assets/GXS-Checklist.png'));
+  const tray = new Tray(path.join(__dirname, TrayIcon));
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Show', click: () => { mainWindow.show(); } },
     { label: 'Quit', click: () => { app.quit(); } },
