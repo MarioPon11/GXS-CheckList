@@ -55,7 +55,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   mainWindow.on('blur', () => {
-    // mainWindow.hide();
+    mainWindow.hide();
   });
 
 
