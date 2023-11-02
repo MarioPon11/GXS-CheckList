@@ -6,7 +6,7 @@ const CheckList: React.FC = () => {
     const { tabs, setTabs } = useCheckboxContext();
     const { currentTabValues, setCurrentTabValues } = useCheckboxContext();
     const { checkedRows, setCheckedRows } = useCheckboxContext();
-    const [activeTab, setActiveTab] = useState<string>('');
+    const { activeTab, setActiveTab } = useCheckboxContext();
 
 
     useEffect(() => {
@@ -14,15 +14,34 @@ const CheckList: React.FC = () => {
             const response = await window.api.invoke('get-data');
             setTabs(response);
             setCurrentTabValues(response[0].values);
-            setActiveTab(response[0].name) // Default to the first tab's values
+            setActiveTab(response[0].name); // Default to the first tab's values
+
+            // Initialize checkedRows with all values set to false for the first tab
+            const initialCheckedRows = response[0].values.reduce((acc: any, value: any) => {
+                acc[value] = false;
+                return acc;
+            }, {} as Record<string, boolean>);
+            setCheckedRows(initialCheckedRows);
         };
         fetchData();
     }, []);
+
+    const UncheckAllRows = () => {
+        // Create a new object with all keys set to false
+        const newCheckedRows = Object.keys(checkedRows).reduce((acc, key) => {
+            acc[key] = false;
+            return acc;
+        }, {} as Record<string, boolean>);
+
+        // Update the state
+        setCheckedRows(newCheckedRows);
+    };
 
     const handleTabClick = (tabName: string) => {
         const selectedTab = tabs.find((tab) => tab.name === tabName);
         if (selectedTab) {
             setCurrentTabValues(selectedTab.values);
+            UncheckAllRows();
             setActiveTab(tabName);
         }
     };

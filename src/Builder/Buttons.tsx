@@ -1,10 +1,16 @@
 import React from 'react';
-import { useInputValueContext, useCheckboxContext } from './Context';
+import { useInputValueContext, useCheckboxContext, useAlertContext } from './Context';
 
 const SubmitBtns: React.FC = () => {
     const { account, order, setOrder } = useInputValueContext(); // Assuming you also update your custom hook
     const { checkedRows, setCheckedRows } = useCheckboxContext();
-    const { currentTabValues } = useCheckboxContext();
+    const { activeTab } = useCheckboxContext();
+    const { alerts, setAlerts } = useAlertContext();
+
+    const addAlert = (message: string) => {
+        const id = Math.random().toString(36).substr(2, 9);
+        setAlerts([...alerts, { id, message }]);
+    };
 
     const UncheckAllRows = () => {
         // Create a new object with all keys set to false
@@ -17,10 +23,30 @@ const SubmitBtns: React.FC = () => {
         setCheckedRows(newCheckedRows);
     };
 
-    function SubmitForm() {
+    async function SubmitForm(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
         console.log('Send button was clicked');
-        console.log('Input Value: ', account, order, currentTabValues, checkedRows);
-        window.api.invoke('send-email', account);
+        console.log('Input Value: ', account, order, checkedRows, activeTab);
+        if (order === '' && account === '') {
+            addAlert('Please enter an order number and account number');
+        } else if (order === '') {
+            addAlert('Please enter an order number');
+        } else if (account === '') {
+            addAlert('Please enter an account number');
+        } else {
+            const emailResponse = await window.api.invoke('send-email', {
+                accountName: account,
+                orderNumber: order,
+                checkedRows: checkedRows,
+                typeOfWork: activeTab
+            });
+            if (emailResponse === 'Error sending email') {
+                addAlert('Error sending email, please try again later');
+            } else {
+                UncheckAllRows();
+                setOrder('');
+            }
+        }
     }
 
     function HandleMenu() {

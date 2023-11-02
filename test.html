@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task Report</title>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #000;
+            background-color: #fff;
+        }
+
+        .header {
+            background-color: #000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 200px;
+        }
+
+        .content {
+            padding: 20px;
+            border: 1px solid #0f5beb;
+            margin: 20px;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #0f5beb;
+        }
+
+        .accent {
+            color: #0f5beb;
+        }
+
+        .title {
+            color: #fff;
+        }
+
+        table {
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://static.wixstatic.com/media/3ceef4_2e20a110e64f4e86abc35e7e10e7c0f8~mv2.png/v1/fill/w_368,h_162,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/3ceef4_2e20a110e64f4e86abc35e7e10e7c0f8~mv2.png"
+            alt="GraphXSource Logo" class="logo">
+        <h1 class="title">${accountName} Task Report</h1>
+    </div>
+    <div class="content">
+        <table width="100%">
+            <tr>
+                <td><strong>Employee:</strong> ${User}</td>
+                <td><strong>Order Number:</strong> ${order}</td>
+                <td><strong>Date:</strong> ${currentDate}</td>
+                <td><strong>Time of Completion:</strong> ${currentTime}</td>
+            </tr>
+        </table>
+
+        <h2>Task Checklist:</h2>
+        <div class="checklist-item">
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0f5beb" class="w-6 h-6" width="24"
+                    height="24">
+                    <path fill-rule="evenodd"
+                        d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z"
+                        clip-rule="evenodd" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="#f75757" class="w-6 h-6" width="24"
+                height="24">
+                    <path fill-rule="evenodd"
+                        d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                        clip-rule="evenodd" />
+                </svg>
+
+            </span>
+            <span>Task Item 1</span>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Para preguntas, consultas o reportes de bugs, favor contactarnos via: <a
+                href="mailto:mario.pon@graphxsource.com" class="accent">mario.pon@graphxsource.com</a></p>
+    </div>
+</body>
+
+</html>

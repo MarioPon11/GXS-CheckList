@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import CheckList from "./Table";
 import OrderInfo from "./OrderInfo";
 import AppMenu from "./CheclistMenu";
-import { InputValueContextProvider, CheckboxContextProvider } from './Context';
+import MainAlertBox from './attoms/mainAlert';
+import { InputValueContextProvider, CheckboxContextProvider, useAlertContext } from './Context';
 
 export default function MyApp() {
     const [menuVisible, setMenuVisible] = useState(false);
+    const { alerts, setAlerts } = useAlertContext();
+
+    const removeAlert = (id: string) => {
+        setAlerts(alerts.filter(alert => alert.id !== id));
+    };
+
 
     return (
         <>
@@ -18,6 +25,14 @@ export default function MyApp() {
             {menuVisible && (
                 <AppMenu closeMenuFunct={setMenuVisible} />
             )}
+            <div className="mainAlertContainer">
+                {
+                    alerts.map(alert => (
+                        <MainAlertBox key={alert.id} message={alert.message} onClose={() => removeAlert(alert.id)} />
+                    ))
+                }
+            </div>
+
             <InputValueContextProvider>
                 <OrderInfo />
                 <CheckboxContextProvider>

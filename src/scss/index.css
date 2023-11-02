@@ -406,6 +406,25 @@ aside::-webkit-scrollbar-track:hover,
   cursor: pointer;
   margin-bottom: 10px;
 }
+.checklist .mainAlertContainer {
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  width: 80%;
+  z-index: 49;
+}
+.checklist .mainAlertContainer .mainAlert {
+  background-color: #f75757;
+  color: #fafafa;
+  padding: 15px 20px;
+  border-radius: 10px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
 .checklist .order-info {
   display: flex;
   align-items: center;

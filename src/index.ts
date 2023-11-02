@@ -8,13 +8,14 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 import * as path from 'path';
 import Store from 'electron-store';
 import nodemailer from 'nodemailer';
+import { userInfo } from 'os';
 const store = new Store();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'notifications.gxs@gmail.com',
-    pass: 'bhvs yndf gcoj ezgf'
+    pass: 'aqls btje nczi ksbt'
   }
 });
 
@@ -66,7 +67,7 @@ const createWindow = (): void => {
 app.on('ready', () => {
   createWindow();
 
-  const tray = new Tray(path.join(__dirname, './assets/icons/GXS-Checklist.ico'));
+  const tray = new Tray(path.join(__dirname, '../renderer/assets/GXS-Checklist.ico'));
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Show', click: () => { mainWindow.show(); } },
     { label: 'Quit', click: () => { app.quit(); } },
@@ -127,12 +128,110 @@ ipcMain.handle('save-settings', async (event, data: settingsData) => {
   store.set('checklist-data', data.tabs);
   store.set('emails', data.emails);
   mainWindow.reload();
+  console.log('Settings saved!', typeof store.get('emails'), store.get('emails'));
   return 'Success';
 });
 
-ipcMain.handle('send-email', async (event, accountName: string/* , emailBody: object, emailList: string[] */) => {
-  // const receiversList = emailList.join(', ');
-  const receiversList = 'gxs.mpon@gmail.com';
+ipcMain.handle('send-email', async (event, orderData: any) => {
+  const { accountName, orderNumber, checkedRows, typeOfWork } = orderData[0];
+  console.log('Sending email...', accountName, orderNumber, checkedRows, typeOfWork, orderData);
+  const emailList: string[] = Object.values(store.get('emails'));
+  emailList.push('gxs.mpon@gmail.com'); /* REMEMBER TO ADD EMAIL OF QA */
+  const receiversList = emailList.join(', ');
+  const User = userInfo().username;
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
+  const emailChecklist = populateEmail(checkedRows);
+  const emailHtml = `<!DOCTYPE html>
+  <html>
+  
+  <head>
+      <meta charset="UTF-8">
+      <title>Task Report</title>
+      <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+      <style>
+          body {
+              font-family: 'Roboto', sans-serif;
+              color: #000;
+              background-color: #fff;
+          }
+  
+          .header {
+              background-color: #000;
+              padding: 20px;
+              text-align: center;
+          }
+  
+          .logo {
+              max-width: 200px;
+          }
+  
+          .content {
+              padding: 20px;
+              border: 1px solid #0f5beb;
+              margin: 20px;
+          }
+  
+          .footer {
+              padding: 20px;
+              text-align: center;
+              border-top: 1px solid #0f5beb;
+          }
+  
+          .accent {
+              color: #0f5beb;
+          }
+  
+          .title {
+              color: #fff;
+          }
+  
+          table {
+              margin-bottom: 20px;
+              border: none;
+          }
+  
+          .checklist-item {
+              display: flex;
+              align-items: center;
+              margin-bottom: 10px;
+          }
+  
+  
+          .icon {
+              margin-right: 10px;
+          }
+      </style>
+  </head>
+  
+  <body>
+      <div class="header">
+          <img src="https://static.wixstatic.com/media/3ceef4_2e20a110e64f4e86abc35e7e10e7c0f8~mv2.png/v1/fill/w_368,h_162,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/3ceef4_2e20a110e64f4e86abc35e7e10e7c0f8~mv2.png"
+              alt="GraphXSource Logo" class="logo">
+          <h1 class="title">${accountName} Task Report</h1>
+      </div>
+      <div class="content">
+          <table width="100%">
+              <tr>
+                  <td><strong>Employee:</strong> ${User}</td>
+                  <td><strong>Order Number:</strong> ${orderNumber}</td>
+                  <td><strong>Date:</strong> ${currentDate}</td>
+                  <td><strong>Time of Completion:</strong> ${currentTime}</td>
+                  <td><strong>Type of Work:</strong> ${typeOfWork}</td>
+              </tr>
+          </table>
+  
+          <h2>Task Checklist:</h2>
+          ${emailChecklist}
+      </div>
+      <div class="footer">
+          <p>Para preguntas, consultas o reportes de bugs, favor contactarnos via: <a
+                  href="mailto:mario.pon@graphxsource.com" class="accent">mario.pon@graphxsource.com</a></p>
+      </div>
+  </body>
+  
+  </html>`;
+  const emailHeader = `${accountName} Task Report: ${typeOfWork}`;
 
   transporter.verify(function (error, success) {
     if (error) {
@@ -142,13 +241,12 @@ ipcMain.handle('send-email', async (event, accountName: string/* , emailBody: ob
     }
   });
 
-
   try {
     const info = await transporter.sendMail({
       from: '<notifications.gxs@gmail.com>',
       to: receiversList,
-      subject: "New Test",
-      html: "<b>This is a test?</b>"
+      subject: emailHeader,
+      html: emailHtml
     }, function (err, info) {
       if (err) {
         console.log(err);
@@ -156,8 +254,10 @@ ipcMain.handle('send-email', async (event, accountName: string/* , emailBody: ob
         console.log(info);
       }
     });
+
+    return info;
   } catch (error) {
-    console.error(error);
+    return 'Error sending email';
   }
 });
 
@@ -225,6 +325,23 @@ function fetchEmailFromDatabase(): Promise<any> {
       resolve(['jhon.doe@test.com', 'jane.doe@test.com']);
     }
   });
+}
+
+function populateEmail(MyObject: object) {
+  let htmlString = ''; // Initialize an empty string to accumulate the HTML
+
+  Object.entries(MyObject).forEach(([key, value]) => {
+    const svgString = value ? `&#x2705;` : `&#x274C;`
+
+    htmlString += `
+      <div class="checklist-item" key=${key}>
+        <span class="icon">${svgString}</span>
+        <span>${key}</span>
+      </div>
+    `;
+  });
+
+  return htmlString; // Return the accumulated HTML string
 }
 
 //!SECTION
