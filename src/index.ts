@@ -67,7 +67,7 @@ const createWindow = (): void => {
 app.on('ready', () => {
   createWindow();
 
-  const tray = new Tray(path.join(__dirname, '../renderer/assets/GXS-Checklist.ico'));
+  const tray = new Tray(path.join(__dirname, '../renderer/assets/GXS-Checklist.png'));
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Show', click: () => { mainWindow.show(); } },
     { label: 'Quit', click: () => { app.quit(); } },

@@ -18,7 +18,7 @@ const config: ForgeConfig = {
     icon: './src/assets/icons/icon.ico',
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({setupIcon: './src/assets/GXS-Checklist.ico'}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
