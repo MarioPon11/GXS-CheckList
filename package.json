@@ -1,8 +1,8 @@
 {
   "name": "gxs-checklist",
   "productName": "gxs-checklist",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.0.1",
+  "description": "Application for QC in GXS",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
