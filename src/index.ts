@@ -10,6 +10,10 @@ import Store from 'electron-store';
 import nodemailer from 'nodemailer';
 import { userInfo } from 'os';
 import updater from 'electron-simple-updater';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const store = new Store();
 
 updater.init({
@@ -45,8 +49,8 @@ updater.on('update-downloaded', (meta: any) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'notifications.gxs@gmail.com',
-    pass: 'aqls btje nczi ksbt'
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD
   }
 });
 
@@ -161,7 +165,7 @@ ipcMain.handle('send-email', async (event, orderData: any) => {
   const { accountName, orderNumber, checkedRows, typeOfWork } = orderData[0];
   console.log('Sending email...', accountName, orderNumber, checkedRows, typeOfWork, orderData);
   const emailList: string[] = Object.values(store.get('emails'));
-  emailList.push('gxs.mpon@gmail.com'); /* REMEMBER TO ADD EMAIL OF QA */
+  emailList.push(process.env.STATIC_EMAIL);
   const receiversList = emailList.join(', ');
   const User = userInfo().username;
   const currentDate = new Date().toLocaleDateString();
