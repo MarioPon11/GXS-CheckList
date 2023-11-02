@@ -5,6 +5,9 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
+import { PublisherGithub } from '@electron-forge/publisher-github';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
@@ -36,6 +39,15 @@ const config: ForgeConfig = {
       devContentSecurityPolicy: "default-src 'self' 'unsafe-inline' data: https://unpkg.com https://api.update.rocks; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: https://www.gstatic.com; style-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src 'self' 'unsafe-inline' data: https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com;" 
     }),
   ],
+  publishers: [new PublisherGithub({
+    repository: {
+      owner: 'MarioPon11',
+      name: 'GXS-CheckList'
+    },
+    prerelease: false,
+    draft: false,
+    authToken: process.env.GITHUB_TOKEN
+  })]
 };
 
 export default config;
