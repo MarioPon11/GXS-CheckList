@@ -9,48 +9,17 @@ import * as path from 'path';
 import Store from 'electron-store';
 import nodemailer from 'nodemailer';
 import { userInfo } from 'os';
-import updater from 'electron-simple-updater';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const store = new Store();
 
-updater.init({
-  checkUpdateOnStart: true,
-  autoDownload: true,
-  url: 'https://yourdomain.com' /* UPDATE THE URL */
-});
-
-updater.on('update-available', (meta: any) => {
-  new Notification({
-    title: 'Update Available',
-    body: `A new update (${meta.version}) is available.`
-  }).show();
-});
-
-updater.on('update-downloaded', (meta: any) => {
-  console.log('Update downloaded:', meta.version);
-
-  const dialogOpts: MessageBoxOptions  = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: `A new version (${meta.version}) has been downloaded.`,
-    detail: 'Do you want to install the update now?'
-  };
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) updater.quitAndInstall();
-    // If user chooses 'Later', do nothing. The update will be applied the next time the app starts.
-  });
-});
-
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_ADDRESS,
-    pass: process.env.EMAIL_PASSWORD
+    user: 'notifications.gxs@gmail.com',
+    pass: 'iriv kyqw sckm gwfw'
   }
 });
 
@@ -60,6 +29,8 @@ const TrayIcon = process.platform === 'win32' ? '../renderer/assets/GXS-Checklis
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+
+const appLock: boolean = app.requestSingleInstanceLock();
 
 let mainWindow: BrowserWindow;
 
@@ -83,6 +54,7 @@ const createWindow = (): void => {
     },
   });
 
+  // mainWindow.webContents.openDevTools();
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
@@ -90,25 +62,35 @@ const createWindow = (): void => {
     mainWindow.hide();
   });
 
-
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', () => {
-  createWindow();
-  const tray = new Tray(path.join(__dirname, TrayIcon));
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Show', click: () => { mainWindow.show(); } },
-    { label: 'Quit', click: () => { app.quit(); } },
-  ]);
-  tray.setToolTip('GXS Checklist');
-  tray.setContextMenu(contextMenu);
-  tray.on('click', () => {
-    mainWindow.show();
+if (!appLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
   });
-});
+
+  // This method will be called when Electron has finished
+  // initialization and is ready to create browser windows.
+  // Some APIs can only be used after this event occurs.
+  app.on('ready', () => {
+    createWindow();
+    const tray = new Tray(path.join(__dirname, TrayIcon));
+    const contextMenu = Menu.buildFromTemplate([
+      { label: 'Show', click: () => { mainWindow.show(); } },
+      { label: 'Quit', click: () => { app.quit(); } },
+    ]);
+    tray.setToolTip('GXS Checklist');
+    tray.setContextMenu(contextMenu);
+    tray.on('click', () => {
+      mainWindow.show();
+    });
+  });
+}
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -147,11 +129,6 @@ ipcMain.handle('get-emails', async (event) => {
   return email;
 });
 
-interface settingsData {
-  tabs: object[],
-  emails: string[]
-}
-
 ipcMain.handle('save-settings', async (event, data: settingsData) => {
   console.log('Saving settings:', data.tabs, data.emails);
   store.set('checklist-data', data.tabs);
@@ -165,7 +142,7 @@ ipcMain.handle('send-email', async (event, orderData: any) => {
   const { accountName, orderNumber, checkedRows, typeOfWork } = orderData[0];
   console.log('Sending email...', accountName, orderNumber, checkedRows, typeOfWork, orderData);
   const emailList: string[] = Object.values(store.get('emails'));
-  emailList.push(process.env.STATIC_EMAIL);
+  emailList.push('gxs.mpon@gmail.com');
   const receiversList = emailList.join(', ');
   const User = userInfo().username;
   const currentDate = new Date().toLocaleDateString();
@@ -345,3 +322,10 @@ function populateEmail(MyObject: object) {
 //!SECTION
 
 //SECTION - Types
+
+interface settingsData {
+  tabs: object[],
+  emails: string[]
+}
+
+//!SECTION

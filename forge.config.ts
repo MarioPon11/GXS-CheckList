@@ -15,10 +15,16 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: './src/assets/icons/icon.ico',
+    icon: './src/assets/GXS-Checklist.ico',
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({setupIcon: './src/assets/GXS-Checklist.ico'}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({
+    setupIcon: './src/assets/GXS-Checklist.ico',
+    iconUrl: 'https://raw.githubusercontent.com/MarioPon11/GXS-CheckList/master/src/assets/GXS-Checklist.ico',
+    setupExe: "checklistSetup.exe",
+    name: "GXS-CheckList",
+    noMsi: true,
+  }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({

@@ -1,7 +1,6 @@
-import React from 'react';
 import { TailSpin } from 'react-loader-spinner';
 
-const LoadBar  = () => {
+const LoadBar = () => {
     return (
         <div className="preloader">
             <TailSpin
@@ -15,7 +14,7 @@ const LoadBar  = () => {
                 visible={true}
             />
         </div>
-    )
+    );
 };
 
-export default LoadBar ;
+export default LoadBar;
