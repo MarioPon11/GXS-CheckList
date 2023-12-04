@@ -1,7 +1,7 @@
 {
   "name": "gxs-checklist",
   "productName": "gxs-checklist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Application for QC in GXS",
   "main": ".webpack/main",
   "scripts": {
@@ -49,6 +49,11 @@
     "url-loader": "^4.1.1"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.19",
     "assert": "^2.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",

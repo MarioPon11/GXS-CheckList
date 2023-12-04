@@ -6,10 +6,9 @@ import { AlertContextProvider } from './Builder/Context';
 
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // Simulate an API call
         setTimeout(() => {
             setIsLoading(false);
         }, 3000);

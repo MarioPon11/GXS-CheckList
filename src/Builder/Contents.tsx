@@ -1,30 +1,54 @@
 import React, { useState } from 'react';
 import CheckList from "./Table";
 import OrderInfo from "./OrderInfo";
-import AppMenu from "./CheclistMenu";
 import MainAlertBox from './attoms/mainAlert';
 import { InputValueContextProvider, CheckboxContextProvider, useAlertContext } from './Context';
+import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Backdrop from '@mui/material/Backdrop';
+import SettingMenu from '../Builder/CheclistMenu';
+
 
 export default function MyApp() {
-    const [menuVisible, setMenuVisible] = useState(false);
+    const [open, setOpen] = useState(false);
     const { alerts, setAlerts } = useAlertContext();
 
     const removeAlert = (id: string) => {
         setAlerts(alerts.filter(alert => alert.id !== id));
     };
 
+    const AppMenu = () => {
+        const closeMenu = () => {
+            setOpen(false);
+        }
+
+        return (
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={() => setOpen(false)}
+            >
+                <SettingMenu closeMenu={closeMenu} />
+            </Backdrop>
+        )
+    }
 
     return (
-        <>
-            <div className="title">
-                <h3>GXS-Checklist</h3>
-                <h3 onClick={() => setMenuVisible(!menuVisible)} className='settings'>
-                    <i className='bx bxs-cog'></i>
-                </h3>
-            </div>
-            {menuVisible && (
-                <AppMenu closeMenuFunct={setMenuVisible} />
-            )}
+        <Box width={"100%"} height={"100%"}>
+            <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-between' }}>
+                <Typography
+                    variant="h4"
+                >
+                    Checklist
+                </Typography>
+
+                <SettingsIcon onClick={() => {
+                    setOpen(!open);
+                }} fontSize='large' />
+            </Box>
+            <AppMenu />
+
             <div className="mainAlertContainer">
                 {
                     alerts.map(alert => (
@@ -39,6 +63,6 @@ export default function MyApp() {
                     <CheckList />
                 </CheckboxContextProvider>
             </InputValueContextProvider>
-        </>
+        </Box>
     )
 }

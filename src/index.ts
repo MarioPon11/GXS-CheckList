@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const TrayIcon = process.platform === 'win32' ? '../renderer/assets/GXS-Checklist.ico' : '../renderer/assets/GXS-Checklist.png';
+const TrayIcon = '../renderer/assets/GXS-Checklist.ico';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -54,14 +54,13 @@ const createWindow = (): void => {
     },
   });
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   mainWindow.on('blur', () => {
-    mainWindow.hide();
+    // mainWindow.hide();
   });
-
 };
 
 if (!appLock) {
@@ -74,9 +73,6 @@ if (!appLock) {
     }
   });
 
-  // This method will be called when Electron has finished
-  // initialization and is ready to create browser windows.
-  // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
     createWindow();
     const tray = new Tray(path.join(__dirname, TrayIcon));
@@ -92,9 +88,6 @@ if (!appLock) {
   });
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
@@ -108,9 +101,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
 
 //SECTION - IPC Events
 
@@ -273,20 +263,21 @@ ipcMain.handle('send-email', async (event, orderData: any) => {
 
 function fetchDataFromDatabase(): Promise<any> {
   const data = store.get('checklist-data');
-  // Tab names
+
+  /* // Tab names
   const fullData: object[] = [{
     name: 'Welcome!',
     values: [
       'Welcome to the CheckList!',
       'Please Click on the Gear Icon to setup your tasks!'
     ]
-  }];
+  }]; */
 
   return new Promise((resolve) => {
     if (data) {
       resolve(data);
     } else {
-      resolve(fullData);
+      resolve(null);
     }
   });
 }
