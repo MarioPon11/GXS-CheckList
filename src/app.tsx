@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import MyApp from './Builder/Contents';
 import LoadBar from './Builder/preloader';
-import { AlertContextProvider } from './Builder/Context';
+import { AlertProvider } from './context/settingsErrorContext';
 
 
 function App() {
@@ -15,13 +15,13 @@ function App() {
     }, []);
 
     return (
-        <AlertContextProvider>
+        <AlertProvider>
             <div className='checklist'>
                 {
                     isLoading ? <LoadBar /> : <MyApp />
                 }
             </div>
-        </AlertContextProvider>
+        </AlertProvider>
     );
 }
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useCheckboxContext } from './Context';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -149,7 +148,7 @@ const CheckList: React.FC<CheckListProps> = () => {
                     <Button>Submit</Button>
                     <Button sx={{ width: '30%' }}><KeyboardArrowDownIcon /></Button>
                 </ButtonGroup>
-                <Button variant='contained' color='secondary' sx={{ width: '60%' }}>Reset</Button>
+                <Button variant='outlined' sx={{ width: '60%' }}>Reset</Button>
             </Box>
         </Box>
     );

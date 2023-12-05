@@ -7,6 +7,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+
+const BoxStyles = {
+    overflowY: 'scroll',
+    paddingRight: 1,
+    '&::-webkit-scrollbar': {
+        width: '10px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+        background: '#888',
+        borderRadius: '5px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+        background: '#555',
+    },
+    '&::-webkit-scrollbar-track': {
+        background: '#f1f1f1',
+        borderRadius: '10px',
+    },
+}
 
 const EmailSettings = () => {
     const [emails, setEmails] = useState([]);
@@ -14,8 +34,12 @@ const EmailSettings = () => {
     const editModeRef = useRef<string>(''); // Ref to store the original email when entering edit mode
 
     useEffect(() => {
-        async function fetchEmails(){
+        async function fetchEmails() {
             const emailData = await window.api.invoke('get-emails');
+
+            if (!emailData) {
+                return;
+            }
             setEmails(emailData);
         }
 
@@ -70,7 +94,7 @@ const EmailSettings = () => {
     };
 
     return (
-        <div>
+        <Box maxHeight={'395px'} sx={BoxStyles}>
             {emails.map((email, index) => (
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     {editModeIndex === index ? (
@@ -109,11 +133,12 @@ const EmailSettings = () => {
                 variant="outlined"
                 fullWidth
                 onClick={addNewEmail}
-                sx={{ marginTop: 1 }}
+                sx={{ marginTop: 2 }}
+                startIcon={<AddIcon />}
             >
                 Add Email
             </Button>
-        </div>
+        </Box>
     );
 };
 

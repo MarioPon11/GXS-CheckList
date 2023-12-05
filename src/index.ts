@@ -264,15 +264,6 @@ ipcMain.handle('send-email', async (event, orderData: any) => {
 function fetchDataFromDatabase(): Promise<any> {
   const data = store.get('checklist-data');
 
-  /* // Tab names
-  const fullData: object[] = [{
-    name: 'Welcome!',
-    values: [
-      'Welcome to the CheckList!',
-      'Please Click on the Gear Icon to setup your tasks!'
-    ]
-  }]; */
-
   return new Promise((resolve) => {
     if (data) {
       resolve(data);
@@ -288,7 +279,7 @@ function fetchEmailFromDatabase(): Promise<any> {
     if (email) {
       resolve(email);
     } else {
-      resolve(['jhon.doe@test.com', 'jane.doe@test.com']);
+      resolve(null);
     }
   });
 }
