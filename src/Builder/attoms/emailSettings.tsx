@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import { useEmailContext } from '../../context/emailSettingsContext';
 
 const BoxStyles = {
     overflowY: 'scroll',
@@ -29,7 +30,7 @@ const BoxStyles = {
 }
 
 const EmailSettings = () => {
-    const [emails, setEmails] = useState([]);
+    const { emails, setEmails } = useEmailContext();
     const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
     const editModeRef = useRef<string>(''); // Ref to store the original email when entering edit mode
 

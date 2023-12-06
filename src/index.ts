@@ -115,7 +115,6 @@ ipcMain.handle('update-data', async (event, data: object) => {
 
 ipcMain.handle('get-emails', async (event) => {
   const email = await fetchEmailFromDatabase();
-  console.log('The email is:', email);
   return email;
 });
 

@@ -28,7 +28,7 @@ npm install
 
 For starting the app use:
 ```bash
-npm run start
+npm start
 ```
 
 This will compile all the source code in the src folder and then run your electron app with the compiled code. No need to run the **tsc** command. But if you want to preview without running electron, then you will have to compile and open it from react.

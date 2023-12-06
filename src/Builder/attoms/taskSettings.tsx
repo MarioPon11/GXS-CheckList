@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import { Paper } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import { useTaskContext } from '../../context/tasksContext';
 
 const BoxStyles = {
     overflowY: 'scroll',
@@ -32,7 +33,7 @@ const BoxStyles = {
 }
 
 const TaskSettings = () => {
-    const [tasks, setTasks] = useState([]);
+    const { tasks, setTasks } = useTaskContext();
 
     useEffect(() => {
         async function fetchTasks() {
@@ -108,7 +109,7 @@ const TaskSettings = () => {
                                             editedTask.current = { ...editedTask.current, name: e.target.value };
                                             setTasks([...tasks]);
                                         }}
-                                        sx={{ marginBottom: 1 }}
+                                        sx={{ marginBottom: 4 }}
                                         fullWidth
                                     />
                                     <TextField
@@ -122,6 +123,7 @@ const TaskSettings = () => {
                                             };
                                             setTasks([...tasks]);
                                         }}
+                                        minRows={4}
                                         fullWidth
                                     />
                                 </React.Fragment>
@@ -132,7 +134,7 @@ const TaskSettings = () => {
                                     </Typography>
                                     <Stack component={Paper} sx={{ padding: 2 }}>
                                         {task.values.map((value: string, idx: number) => (
-                                            <Box key={idx}>- {value}</Box>
+                                            <Box key={idx}><Typography>- {value}</Typography></Box>
                                         ))}
                                     </Stack>
                                 </React.Fragment>

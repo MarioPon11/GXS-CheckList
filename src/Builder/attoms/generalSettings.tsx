@@ -7,7 +7,8 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDarkMode } from '../../context/appThemeModeContext';
 
 const BoxStyles = {
     overflowY: 'scroll',
@@ -29,11 +30,18 @@ const BoxStyles = {
 }
 
 const GeneralSettings = () => {
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     const [selTheme, setSelTheme] = useState('light');
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
+    useEffect(() => {
+        setSelTheme(darkMode ? 'dark' : 'light');
+    }, [darkMode]);
 
     const handleThemeChange = (event: React.MouseEvent<HTMLElement>, newTheme: string) => {
-        setSelTheme(newTheme);
+        if (newTheme !== null) {
+            setSelTheme(newTheme);
+            toggleDarkMode();
+        }
     };
 
     return (
@@ -41,14 +49,14 @@ const GeneralSettings = () => {
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2}>
                 <Typography>App theme</Typography>
                 <ToggleButtonGroup size='small' value={selTheme} exclusive onChange={handleThemeChange} color='primary'>
-                    <ToggleButton value="light" {...label}><LightModeIcon /></ToggleButton>
-                    <ToggleButton value="dark" {...label}><DarkModeIcon /></ToggleButton>
+                    <ToggleButton value="light" aria-label='light'><LightModeIcon /></ToggleButton>
+                    <ToggleButton value="dark" aria-label='dark'><DarkModeIcon /></ToggleButton>
                 </ToggleButtonGroup>
             </Box>
             <Typography sx={{ marginBottom: 1 }}>Settings Management</Typography>
             <Box display={'flex'} gap={1} marginBottom={2}>
                 <Button fullWidth variant='contained' startIcon={<DownloadIcon />} sx={{ marginBottom: 1 }}>Import</Button>
-                <Button fullWidth variant='contained' startIcon={<FileUploadIcon />} sx={{ marginBottom: 1 }}>Export</Button>
+                <Button fullWidth variant='outlined' startIcon={<FileUploadIcon />} sx={{ marginBottom: 1 }}>Export</Button>
             </Box>
             <Typography sx={{ marginBottom: 1 }}>Need help?</Typography>
             <Button fullWidth variant='outlined' sx={{ marginBottom: 1 }}>Contact Support</Button>
