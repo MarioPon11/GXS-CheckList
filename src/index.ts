@@ -119,19 +119,24 @@ ipcMain.handle('get-emails', async (event) => {
 });
 
 ipcMain.handle('save-settings', async (event, data: settingsData) => {
-  console.log('Saving settings:', data.tabs, data.emails);
-  store.set('checklist-data', data.tabs);
-  store.set('emails', data.emails);
+  console.log('Saving settings:', data);
+  if (data.emails) {
+    store.set('emails', data.emails);
+  } else {
+    return 'Error saving emails';
+  }
+
   if (data.theme) {
     store.set('theme', data.theme);
-  } else {
-    const theme = store.get('theme');
-    if (!theme) {
-      store.set('theme', 'light');
-    }
   }
-  mainWindow.reload();
-  console.log('Settings saved!', typeof store.get('emails'), store.get('emails'));
+
+  if (data.tabs) {
+    store.set('tabs', data.tabs);
+  } else {
+    return 'Error saving tabs';
+  }
+
+
   return 'Success';
 });
 

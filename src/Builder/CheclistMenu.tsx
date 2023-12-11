@@ -77,14 +77,14 @@ const SettingMenu = ({ closeMenu }: SettingMenuProps) => {
         }
         const data = {
             emails,
-            tasks
+            tabs: tasks
         }
         const savingStatus = window.api.invoke('save-settings', data);
         if (savingStatus === 'Success') {
             addAlert('success', 'Settings saved successfully');
             closeMenu();
         } else {
-            addAlert('error', 'Error saving settings');
+            addAlert('error', savingStatus);
         }
     }
 
