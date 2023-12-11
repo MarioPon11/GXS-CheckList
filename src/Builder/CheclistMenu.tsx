@@ -52,7 +52,7 @@ const SettingMenu = ({ closeMenu }: SettingMenuProps) => {
         if (emails.length === 0) {
             addAlert('error', 'Please add at least one email');
             return
-        } 
+        }
         if (tasks.length === 0) {
             addAlert('error', 'Please add at least one task');
             return
@@ -75,8 +75,17 @@ const SettingMenu = ({ closeMenu }: SettingMenuProps) => {
                 return
             }
         }
-        addAlert('info', 'Settings saved successfully');
-        closeMenu();
+        const data = {
+            emails,
+            tasks
+        }
+        const savingStatus = window.api.invoke('save-settings', data);
+        if (savingStatus === 'Success') {
+            addAlert('success', 'Settings saved successfully');
+            closeMenu();
+        } else {
+            addAlert('error', 'Error saving settings');
+        }
     }
 
     return (
@@ -124,8 +133,8 @@ const SettingMenu = ({ closeMenu }: SettingMenuProps) => {
                     {tabValue === 2 && <TaskSettings />}
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2, gap: 1 }}>
-                    <Button variant="contained" fullWidth onClick={() => handleSaveSettings()}>Save</Button>
-                    <Button variant="outlined" fullWidth onClick={() => closeMenu()}>Cancel</Button>
+                    <Button variant="contained" disableElevation fullWidth onClick={() => handleSaveSettings()}>Save</Button>
+                    <Button variant="outlined" disableElevation fullWidth onClick={() => closeMenu()}>Cancel</Button>
                 </Box>
             </Box>
         </Paper>

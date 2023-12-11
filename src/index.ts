@@ -122,9 +122,29 @@ ipcMain.handle('save-settings', async (event, data: settingsData) => {
   console.log('Saving settings:', data.tabs, data.emails);
   store.set('checklist-data', data.tabs);
   store.set('emails', data.emails);
+  if (data.theme) {
+    store.set('theme', data.theme);
+  } else {
+    const theme = store.get('theme');
+    if (!theme) {
+      store.set('theme', 'light');
+    }
+  }
   mainWindow.reload();
   console.log('Settings saved!', typeof store.get('emails'), store.get('emails'));
   return 'Success';
+});
+
+ipcMain.handle('get-app-theme', async (event) => {
+  const theme = store.get('theme');
+  if (!theme) {
+    return 'light';
+  }
+  return theme;
+});
+
+ipcMain.handle('set-app-theme', async (event, theme: string) => {
+  store.set('theme', theme);
 });
 
 ipcMain.handle('send-email', async (event, orderData: any) => {
@@ -307,6 +327,7 @@ function populateEmail(MyObject: object) {
 interface settingsData {
   tabs: object[],
   emails: string[]
+  theme?: string
 }
 
 //!SECTION

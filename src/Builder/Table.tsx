@@ -144,7 +144,7 @@ const CheckList: React.FC<CheckListProps> = () => {
             </Box>
             {/* Remaining code unchanged */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, height: '50px', position: 'absolute', bottom: 0, width: '100%' }}>
-                <ButtonGroup variant="contained" aria-label="outlined primary button group" fullWidth>
+                <ButtonGroup variant="contained" aria-label="outlined primary button group" disableElevation fullWidth>
                     <Button>Submit</Button>
                     <Button sx={{ width: '30%' }}><KeyboardArrowDownIcon /></Button>
                 </ButtonGroup>

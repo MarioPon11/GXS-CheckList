@@ -55,7 +55,7 @@ const GeneralSettings = () => {
             </Box>
             <Typography sx={{ marginBottom: 1 }}>Settings Management</Typography>
             <Box display={'flex'} gap={1} marginBottom={2}>
-                <Button fullWidth variant='contained' startIcon={<DownloadIcon />} sx={{ marginBottom: 1 }}>Import</Button>
+                <Button fullWidth disableElevation variant='contained' startIcon={<DownloadIcon />} sx={{ marginBottom: 1 }}>Import</Button>
                 <Button fullWidth variant='outlined' startIcon={<FileUploadIcon />} sx={{ marginBottom: 1 }}>Export</Button>
             </Box>
             <Typography sx={{ marginBottom: 1 }}>Need help?</Typography>
